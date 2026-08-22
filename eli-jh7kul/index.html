@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5FAFD" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#08192A" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="robots" content="noindex, nofollow">
+<title>Eli — this week</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2317558A'/%3E%3Cpath d='M9 22c3-1 4.5-3.5 6-7 1-2.3 2.6-3.6 4.6-3.6' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='21.5' cy='9.5' r='2.4' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --ground:#F5FAFD;
+    --ink:#0E3053;
+    --ink-soft:#3B5F85;
+    --ink-faint:#5E82A6;
+    --accent:#17558A;
+    --pill:#FFFFFF;
+    --pill-line:#9FC2DF;
+    --boxA:#CCE1F4;
+    --boxB:#E4EFFA;
+    --edge:rgba(14,48,83,.14);
+    --badge:#FFFFFF;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#08192A;
+      --ink:#E2EDF8;
+      --ink-soft:#A9C3DC;
+      --ink-faint:#7C9BBA;
+      --accent:#7DB8E8;
+      --pill:#10293F;
+      --pill-line:#2F5978;
+        --boxA:#173A57;
+      --boxB:#102B41;
+      --edge:rgba(226,237,248,.12);
+      --badge:#0A2033;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#08192A;
+    --ink:#E2EDF8;
+    --ink-soft:#A9C3DC;
+    --ink-faint:#7C9BBA;
+    --accent:#7DB8E8;
+    --pill:#10293F;
+    --pill-line:#2F5978;
+    --boxA:#173A57;
+    --boxB:#102B41;
+    --edge:rgba(226,237,248,.12);
+    --badge:#0A2033;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--ground);color:var(--ink);
+    font:400 clamp(14px,3.6vw,17px)/1.45 "Avenir Next",Avenir,Futura,"Century Gothic","Segoe UI",system-ui,sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .sheet{
+    max-width:520px;margin:0 auto;min-height:100%;
+    padding:clamp(16px,4.5vw,28px) clamp(14px,4vw,22px) clamp(18px,4vw,26px);
+    display:flex;flex-direction:column;gap:clamp(10px,2.4vw,15px);
+  }
+
+  .name{
+    margin:0;font-weight:300;letter-spacing:-.015em;line-height:.95;
+    font-size:clamp(44px,13vw,68px);color:var(--accent);
+  }
+  .dates{
+    margin:6px 0 0;font-size:clamp(11px,3vw,13px);
+    letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-faint);
+  }
+  .goal{
+    margin:3px 0 0;font-size:clamp(13px,3.4vw,15px);font-weight:500;color:var(--ink-soft);
+  }
+
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{
+    background:var(--pill);border:1.5px solid var(--pill-line);border-radius:999px;
+    padding:8px 16px;font-size:clamp(12px,3.2vw,14px);line-height:1.25;color:var(--ink);
+  }
+  .pill b{font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+
+  .runs{display:flex;flex-direction:column;gap:clamp(10px,2.6vw,15px);flex:1}
+  .run{
+    position:relative;border-radius:22px;padding:clamp(14px,3.6vw,19px);
+    padding-left:clamp(54px,14vw,68px);
+    background:var(--boxA);border:1px solid var(--edge);color:var(--ink);
+  }
+  .run:nth-child(even){background:var(--boxB)}
+  .num{
+    position:absolute;left:clamp(14px,3.8vw,20px);top:clamp(14px,3.6vw,19px);
+    font-size:clamp(20px,5.6vw,26px);font-weight:300;color:var(--accent);
+    font-variant-numeric:tabular-nums;opacity:.7;
+  }
+  .top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+  .kind{
+    font-size:clamp(20px,5.6vw,26px);font-weight:400;letter-spacing:-.01em;line-height:1;
+    color:var(--accent);
+  }
+  .day{
+    background:var(--badge);border-radius:999px;padding:6px 15px;
+    font-size:clamp(11px,3vw,13px);font-weight:600;letter-spacing:.03em;
+    white-space:nowrap;color:var(--accent);
+  }
+  .lines{display:flex;flex-direction:column;gap:5px}
+  .l{display:flex;gap:10px;align-items:baseline}
+  .l .k{
+    flex:0 0 clamp(66px,18vw,82px);font-size:clamp(10px,2.7vw,11px);
+    letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--ink-faint);
+  }
+  .l .v{flex:1;font-size:clamp(13px,3.5vw,16px);color:var(--ink)}
+  .l .v b{font-weight:600}
+  .single{font-size:clamp(16px,4.4vw,19px);font-weight:500}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <header>
+    <h1 class="name">Eli</h1>
+    <p class="dates">20 &ndash; 22 August</p>
+    <p class="goal">Holding 15 km &mdash; through end of September</p>
+  </header>
+
+  <div class="pills">
+    <span class="pill">Recovery <b>HR 150</b></span>
+    <span class="pill">Long run <b>HR 160</b></span>
+    <span class="pill">Intervals <b>5:05 /km</b></span>
+  </div>
+
+  <div class="runs">
+    <article class="run">
+      <span class="num">01</span>
+      <div class="top"><span class="kind">Recovery</span><span class="day">Wed</span></div>
+      <div class="lines">
+        <div class="l"><span class="k">Main</span><span class="v single">7 km &mdash; it should feel absurdly slow</span></div>
+      </div>
+    </article>
+    <article class="run">
+      <span class="num">02</span>
+      <div class="top"><span class="kind">Long run</span><span class="day">Fri</span></div>
+      <div class="lines">
+        <div class="l"><span class="k">Main</span><span class="v"><b>13 km</b> &mdash; go early, before the heat</span></div>
+        <div class="l"><span class="k">First 3 km</span><span class="v">HR under 152. Don&rsquo;t spend it early.</span></div>
+        <div class="l"><span class="k">Whole way</span><span class="v">Let the pace go &mdash; hold the number.</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+</body>
+</html>

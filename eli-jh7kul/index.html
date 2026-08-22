@@ -116,6 +116,36 @@
   .l .v{flex:1;font-size:clamp(13px,3.5vw,16px);color:var(--ink)}
   .l .v b{font-weight:600}
   .single{font-size:clamp(16px,4.4vw,19px);font-weight:500}
+
+  /* --- week navigation --- */
+  .weeknav{display:flex;align-items:center;gap:10px;margin:10px 0 0}
+  .navlabel{flex:1;text-align:center;min-width:0}
+  .weeknav .dates{margin:0}
+  .rel{
+    margin:2px 0 0;font-size:clamp(10px,2.7vw,12px);font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);
+  }
+  .rel.off{color:var(--accent)}
+  .arrow{
+    flex:0 0 auto;width:40px;height:40px;border-radius:999px;
+    background:var(--pill);border:1.5px solid var(--pill-line);color:var(--accent);
+    font:400 24px/1 "Avenir Next",Avenir,system-ui,sans-serif;
+    display:flex;align-items:center;justify-content:center;padding:0 0 3px;
+    cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .arrow:disabled{opacity:.25;cursor:default}
+  .week{display:flex;flex-direction:column;gap:clamp(10px,2.4vw,15px);flex:1}
+  .week[hidden]{display:none}
+  .empty{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:6px;text-align:center;color:var(--ink-faint);padding:40px 10px;
+  }
+  .empty p{margin:0;font-size:clamp(14px,3.6vw,16px)}
+  .empty .sub{font-size:clamp(12px,3.2vw,14px);opacity:.8}
+  .pill.sample{
+    background:transparent;border-style:dashed;color:var(--ink-faint);font-weight:500;
+  }
+  .pill.sample b{color:var(--ink-faint);font-weight:700}
 </style>
 </head>
 <body>
@@ -124,11 +154,53 @@
 
   <header>
     <h1 class="name">Eli</h1>
-    <p class="dates">23 &ndash; 29 August</p>
+    <nav class="weeknav">
+      <button class="arrow" id="prev" type="button" aria-label="Last week">&lsaquo;</button>
+      <div class="navlabel">
+        <p class="dates" id="navdates">23 – 29 August</p>
+        <p class="rel" id="navrel">This week</p>
+      </div>
+      <button class="arrow" id="next" type="button" aria-label="This week">&rsaquo;</button>
+    </nav>
     <p class="goal">Holding 15 km &mdash; through end of September</p>
   </header>
 
-  <div class="pills">
+  <!-- last week -->
+  <section class="week" hidden>
+    <div class="pills">
+      <span class="pill sample"><b>Sample week</b> &mdash; placeholder, not your programme</span>
+    </div>
+    <div class="runs">
+      <article class="run">
+        <span class="num">01</span>
+        <div class="top"><span class="kind">Intervals</span><span class="day">Tue</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Warm up</span><span class="v">10 min easy + 4 &times; 20 sec strides</span></div>
+          <div class="l"><span class="k">Main</span><span class="v"><b>4 &times; 3 min</b>, jog the 2 min recovery</span></div>
+          <div class="l"><span class="k">Cool down</span><span class="v">6 min easy</span></div>
+        </div>
+      </article>
+      <article class="run">
+        <span class="num">02</span>
+        <div class="top"><span class="kind">Recovery</span><span class="day">Wed</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Main</span><span class="v single">7 km &mdash; it should feel absurdly slow</span></div>
+        </div>
+      </article>
+      <article class="run">
+        <span class="num">03</span>
+        <div class="top"><span class="kind">Long run</span><span class="day">Fri</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Main</span><span class="v"><b>12 km</b> &mdash; steady, no heroics</span></div>
+          <div class="l"><span class="k">First 3 km</span><span class="v">HR under 152. Don&rsquo;t spend it early.</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- this week -->
+  <section class="week">
+<div class="pills">
     <span class="pill">Recovery <b>HR 150</b></span>
     <span class="pill">Long run <b>HR 160</b></span>
     <span class="pill">Intervals <b>5:05 /km</b></span>
@@ -160,7 +232,49 @@
       </div>
     </article>
   </div>
+  </section>
+
 </div>
+
+<script>
+(function(){
+  var weeks  = [].slice.call(document.querySelectorAll('.week'));
+  var labels = ['Last week','This week'];
+  var dates  = ['16 – 22 August','23 – 29 August'];
+  var CURRENT = 1, i = CURRENT;
+  var prev = document.getElementById('prev'),
+      next = document.getElementById('next'),
+      dEl  = document.getElementById('navdates'),
+      rEl  = document.getElementById('navrel');
+
+  function show(n){
+    i = Math.max(0, Math.min(weeks.length - 1, n));
+    weeks.forEach(function(w, k){ w.hidden = (k !== i); });
+    dEl.textContent = dates[i];
+    rEl.textContent = labels[i];
+    rEl.className   = 'rel' + (i === CURRENT ? '' : ' off');
+    prev.disabled = (i === 0);
+    next.disabled = (i === weeks.length - 1);
+  }
+
+  prev.addEventListener('click', function(){ show(i - 1); });
+  next.addEventListener('click', function(){ show(i + 1); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft')  show(i - 1);
+    if (e.key === 'ArrowRight') show(i + 1);
+  });
+
+  var x0 = null;
+  document.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) show(dx < 0 ? i + 1 : i - 1);
+  }, {passive:true});
+
+  show(CURRENT);
+})();
+</script>
 
 </body>
 </html>

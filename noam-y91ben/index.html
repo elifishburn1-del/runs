@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5FAFD" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#08192A" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="robots" content="noindex, nofollow">
+<title>Noam — this week</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2317558A'/%3E%3Cpath d='M9 22c3-1 4.5-3.5 6-7 1-2.3 2.6-3.6 4.6-3.6' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='21.5' cy='9.5' r='2.4' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --ground:#F5FAFD;
+    --ink:#0E3053;
+    --ink-soft:#3B5F85;
+    --ink-faint:#5E82A6;
+    --accent:#17558A;
+    --pill:#FFFFFF;
+    --pill-line:#9FC2DF;
+    --boxA:#CCE1F4;
+    --boxB:#E4EFFA;
+    --edge:rgba(14,48,83,.14);
+    --badge:#FFFFFF;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#08192A;
+      --ink:#E2EDF8;
+      --ink-soft:#A9C3DC;
+      --ink-faint:#7C9BBA;
+      --accent:#7DB8E8;
+      --pill:#10293F;
+      --pill-line:#2F5978;
+        --boxA:#173A57;
+      --boxB:#102B41;
+      --edge:rgba(226,237,248,.12);
+      --badge:#0A2033;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#08192A;
+    --ink:#E2EDF8;
+    --ink-soft:#A9C3DC;
+    --ink-faint:#7C9BBA;
+    --accent:#7DB8E8;
+    --pill:#10293F;
+    --pill-line:#2F5978;
+    --boxA:#173A57;
+    --boxB:#102B41;
+    --edge:rgba(226,237,248,.12);
+    --badge:#0A2033;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--ground);color:var(--ink);
+    font:400 clamp(14px,3.6vw,17px)/1.45 "Avenir Next",Avenir,Futura,"Century Gothic","Segoe UI",system-ui,sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  .sheet{
+    max-width:520px;margin:0 auto;min-height:100%;
+    padding:clamp(16px,4.5vw,28px) clamp(14px,4vw,22px) clamp(18px,4vw,26px);
+    display:flex;flex-direction:column;gap:clamp(10px,2.4vw,15px);
+  }
+
+  .name{
+    margin:0;font-weight:300;letter-spacing:-.015em;line-height:.95;
+    font-size:clamp(44px,13vw,68px);color:var(--accent);
+  }
+  .dates{
+    margin:6px 0 0;font-size:clamp(11px,3vw,13px);
+    letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-faint);
+  }
+  .goal{
+    margin:3px 0 0;font-size:clamp(13px,3.4vw,15px);font-weight:500;color:var(--ink-soft);
+  }
+
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{
+    background:var(--pill);border:1.5px solid var(--pill-line);border-radius:999px;
+    padding:8px 16px;font-size:clamp(12px,3.2vw,14px);line-height:1.25;color:var(--ink);
+  }
+  .pill b{font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+
+  .runs{display:flex;flex-direction:column;gap:clamp(10px,2.6vw,15px);flex:1}
+  .run{
+    position:relative;border-radius:22px;padding:clamp(14px,3.6vw,19px);
+    padding-left:clamp(54px,14vw,68px);
+    background:var(--boxA);border:1px solid var(--edge);color:var(--ink);
+  }
+  .run:nth-child(even){background:var(--boxB)}
+  .num{
+    position:absolute;left:clamp(14px,3.8vw,20px);top:clamp(14px,3.6vw,19px);
+    font-size:clamp(20px,5.6vw,26px);font-weight:300;color:var(--accent);
+    font-variant-numeric:tabular-nums;opacity:.7;
+  }
+  .top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+  .kind{
+    font-size:clamp(20px,5.6vw,26px);font-weight:400;letter-spacing:-.01em;line-height:1;
+    color:var(--accent);
+  }
+  .day{
+    background:var(--badge);border-radius:999px;padding:6px 15px;
+    font-size:clamp(11px,3vw,13px);font-weight:600;letter-spacing:.03em;
+    white-space:nowrap;color:var(--accent);
+  }
+  .lines{display:flex;flex-direction:column;gap:5px}
+  .l{display:flex;gap:10px;align-items:baseline}
+  .l .k{
+    flex:0 0 clamp(66px,18vw,82px);font-size:clamp(10px,2.7vw,11px);
+    letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--ink-faint);
+  }
+  .l .v{flex:1;font-size:clamp(13px,3.5vw,16px);color:var(--ink)}
+  .l .v b{font-weight:600}
+  .single{font-size:clamp(16px,4.4vw,19px);font-weight:500}
+
+  /* --- week navigation --- */
+  .weeknav{display:flex;align-items:center;gap:10px;margin:10px 0 0}
+  .navlabel{flex:1;text-align:center;min-width:0}
+  .weeknav .dates{margin:0}
+  .rel{
+    margin:2px 0 0;font-size:clamp(10px,2.7vw,12px);font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);
+  }
+  .rel.off{color:var(--accent)}
+  .arrow{
+    flex:0 0 auto;width:40px;height:40px;border-radius:999px;
+    background:var(--pill);border:1.5px solid var(--pill-line);color:var(--accent);
+    font:400 24px/1 "Avenir Next",Avenir,system-ui,sans-serif;
+    display:flex;align-items:center;justify-content:center;padding:0 0 3px;
+    cursor:pointer;-webkit-tap-highlight-color:transparent;
+  }
+  .arrow:disabled{opacity:.25;cursor:default}
+  .week{display:flex;flex-direction:column;gap:clamp(10px,2.4vw,15px);flex:1}
+  .week[hidden]{display:none}
+</style>
+
+<div class="sheet">
+
+  <header>
+    <h1 class="name">Noam</h1>
+    <nav class="weeknav">
+      <button class="arrow" id="prev" type="button" aria-label="Last week" disabled>&lsaquo;</button>
+      <div class="navlabel">
+        <p class="dates" id="navdates">23 – 29 August</p>
+        <p class="rel" id="navrel">This week</p>
+      </div>
+      <button class="arrow" id="next" type="button" aria-label="Next week" disabled>&rsaquo;</button>
+    </nav>
+    <p class="goal">Building aerobic endurance &mdash; and lowering his heart rate</p>
+  </header>
+
+  <!-- this week -->
+  <section class="week">
+  <div class="pills">
+    <span class="pill">Effort <b>by feel</b> &mdash; RPE, until his first test</span>
+  </div>
+
+  <div class="runs">
+
+    <article class="run">
+      <span class="num">01</span>
+      <div class="top"><span class="kind">Intervals</span><span class="day">Tue</span></div>
+      <div class="lines">
+        <div class="l"><span class="k">Warm up</span><span class="v">6 min easy + 3 strides</span></div>
+        <div class="l"><span class="k">Main</span><span class="v"><b>3 &times; 2 min</b>, comfortably hard &mdash; starting to be hard to breathe. <b>Jog</b> the 2 min recovery</span></div>
+        <div class="l"><span class="k">Cool down</span><span class="v">4 min easy</span></div>
+      </div>
+    </article>
+
+    <article class="run">
+      <span class="num">02</span>
+      <div class="top"><span class="kind">Easy</span><span class="day">Thu</span></div>
+      <div class="lines">
+        <div class="l"><span class="k">Main</span><span class="v single">22 min comfortable &mdash; can talk in full sentences</span></div>
+        <div class="l"><span class="k">Cool down</span><span class="v">4 strides + 4 min easy</span></div>
+      </div>
+    </article>
+
+  </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var weeks  = [].slice.call(document.querySelectorAll('.week'));
+  var labels = ['This week'];
+  var dates  = ['23 – 29 August'];
+  var CURRENT = 0, i = CURRENT;
+  var prev = document.getElementById('prev'),
+      next = document.getElementById('next'),
+      dEl  = document.getElementById('navdates'),
+      rEl  = document.getElementById('navrel');
+
+  function show(n){
+    i = Math.max(0, Math.min(weeks.length - 1, n));
+    weeks.forEach(function(w, k){ w.hidden = (k !== i); });
+    dEl.textContent = dates[i];
+    rEl.textContent = labels[i];
+    rEl.className   = 'rel' + (i === CURRENT ? '' : ' off');
+    prev.disabled = (i === 0);
+    next.disabled = (i === weeks.length - 1);
+  }
+
+  prev.addEventListener('click', function(){ show(i - 1); });
+  next.addEventListener('click', function(){ show(i + 1); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft')  show(i - 1);
+    if (e.key === 'ArrowRight') show(i + 1);
+  });
+
+  var x0 = null;
+  document.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) show(dx < 0 ? i + 1 : i - 1);
+  }, {passive:true});
+
+  show(CURRENT);
+})();
+</script>
+
+</body>
+</html>

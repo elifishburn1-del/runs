@@ -23,6 +23,9 @@
     --boxB:#E4EFFA;
     --edge:rgba(14,48,83,.14);
     --badge:#FFFFFF;
+    --good-bg:#D3EFDC;
+    --good-edge:#8FCDA6;
+    --good-ink:#146C3B;
   }
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
@@ -37,6 +40,9 @@
       --boxB:#102B41;
       --edge:rgba(226,237,248,.12);
       --badge:#0A2033;
+      --good-bg:#123424;
+      --good-edge:#2F6B48;
+      --good-ink:#7EE3A8;
     }
   }
   :root[data-theme="dark"]{
@@ -51,6 +57,9 @@
     --boxB:#102B41;
     --edge:rgba(226,237,248,.12);
     --badge:#0A2033;
+    --good-bg:#123424;
+    --good-edge:#2F6B48;
+    --good-ink:#7EE3A8;
   }
 
   *{box-sizing:border-box}
@@ -117,6 +126,8 @@
   .l .v b{font-weight:600}
   .single{font-size:clamp(16px,4.4vw,19px);font-weight:500}
   .soft{font-weight:400}
+  .run.done{background:var(--good-bg);border-color:var(--good-edge)}
+  .donenote{margin:9px 0 0;font-size:clamp(11px,3vw,13px);font-weight:700;letter-spacing:.02em;color:var(--good-ink)}
 
   /* --- week navigation --- */
   .weeknav{display:flex;align-items:center;gap:10px;margin:10px 0 0}
@@ -202,11 +213,12 @@
   <section class="week">
 <div class="pills">
     <span class="pill">Hills &mdash; <b>hard, controlled</b></span>
+    <span class="pill">5K PR: <b>25:19</b> <i>(5:04/km, set in 24&ndash;25&deg;)</i></span>
   </div>
 
   <div class="runs">
 
-    <article class="run">
+    <article class="run done">
       <span class="num">01</span>
       <div class="top"><span class="kind">Test</span><span class="day">Tue</span></div>
       <div class="lines">
@@ -214,6 +226,7 @@
         <div class="l"><span class="k">Main</span><span class="v"><b>5 km as hard as you can hold</b> &mdash; even pace</span></div>
         <div class="l"><span class="k">Cool down</span><span class="v">5 min easy</span></div>
       </div>
+      <p class="donenote">&check; Done &mdash; new 5K PR, 25:19</p>
     </article>
 
     <article class="run">

@@ -19,10 +19,21 @@
     --accent:#17558A;
     --pill:#FFFFFF;
     --pill-line:#9FC2DF;
+    --pill-muted:#E6EBF0;
+    --pill-muted-line:#C9D3DC;
     --boxA:#CCE1F4;
     --boxB:#E4EFFA;
     --edge:rgba(14,48,83,.14);
     --badge:#FFFFFF;
+    --good-bg:#D8EFD8;
+    --good-edge:#8FCDA6;
+    --good-ink:#146C3B;
+    --warn-bg:#FFF2CC;
+    --warn-edge:#E4C97A;
+    --warn-ink:#8A6D1D;
+    --miss-bg:#FCDDDD;
+    --miss-edge:#D89A9A;
+    --miss-ink:#9A3B3B;
   }
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
@@ -33,10 +44,21 @@
       --accent:#7DB8E8;
       --pill:#10293F;
       --pill-line:#2F5978;
-        --boxA:#173A57;
+      --pill-muted:#1B2735;
+      --pill-muted-line:#33414F;
+      --boxA:#173A57;
       --boxB:#102B41;
       --edge:rgba(226,237,248,.12);
       --badge:#0A2033;
+      --good-bg:#123424;
+      --good-edge:#2F6B48;
+      --good-ink:#7EE3A8;
+      --warn-bg:#3A2F16;
+      --warn-edge:#6E5A2A;
+      --warn-ink:#E6C97A;
+      --miss-bg:#3A1E1E;
+      --miss-edge:#6E3B3B;
+      --miss-ink:#E9A8A8;
     }
   }
   :root[data-theme="dark"]{
@@ -47,10 +69,21 @@
     --accent:#7DB8E8;
     --pill:#10293F;
     --pill-line:#2F5978;
+    --pill-muted:#1B2735;
+    --pill-muted-line:#33414F;
     --boxA:#173A57;
     --boxB:#102B41;
     --edge:rgba(226,237,248,.12);
     --badge:#0A2033;
+    --good-bg:#123424;
+    --good-edge:#2F6B48;
+    --good-ink:#7EE3A8;
+    --warn-bg:#3A2F16;
+    --warn-edge:#6E5A2A;
+    --warn-ink:#E6C97A;
+    --miss-bg:#3A1E1E;
+    --miss-edge:#6E3B3B;
+    --miss-ink:#E9A8A8;
   }
 
   *{box-sizing:border-box}
@@ -84,6 +117,7 @@
     padding:8px 16px;font-size:clamp(12px,3.2vw,14px);line-height:1.25;color:var(--ink);
   }
   .pill b{font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+  .pill.muted{background:var(--pill-muted);border-color:var(--pill-muted-line)}
 
   .runs{display:flex;flex-direction:column;gap:clamp(10px,2.6vw,15px);flex:1}
   .run{
@@ -116,6 +150,17 @@
   .l .v{flex:1;font-size:clamp(13px,3.5vw,16px);color:var(--ink)}
   .l .v b{font-weight:600}
   .single{font-size:clamp(16px,4.4vw,19px);font-weight:500}
+  .soft{font-weight:400}
+  .seq{display:flex;flex-direction:column;gap:3px;flex:1}
+  .seq div{font-size:clamp(13px,3.5vw,16px);color:var(--ink)}
+  .seq b{font-weight:600}
+  .seq i{font-style:italic}
+  .run.done{background:var(--good-bg);border-color:var(--good-edge)}
+  .run.partial{background:var(--warn-bg);border-color:var(--warn-edge)}
+  .run.missed{background:var(--miss-bg);border-color:var(--miss-edge)}
+  .donenote{margin:9px 0 0;font-size:clamp(11px,3vw,13px);font-weight:700;letter-spacing:.02em;color:var(--good-ink)}
+  .donenote.partial{color:var(--warn-ink)}
+  .donenote.missed{color:var(--miss-ink)}
 
   /* --- week navigation --- */
   .weeknav{display:flex;align-items:center;gap:10px;margin:10px 0 0}
@@ -137,50 +182,79 @@
   .week{display:flex;flex-direction:column;gap:clamp(10px,2.4vw,15px);flex:1}
   .week[hidden]{display:none}
 </style>
+</head>
+<body>
 
 <div class="sheet">
 
   <header>
     <h1 class="name">Noam</h1>
     <nav class="weeknav">
-      <button class="arrow" id="prev" type="button" aria-label="Last week" disabled>&lsaquo;</button>
+      <button class="arrow" id="prev" type="button" aria-label="Last week">&lsaquo;</button>
       <div class="navlabel">
-        <p class="dates" id="navdates">23 – 29 August</p>
+        <p class="dates" id="navdates">30 August &ndash; 5 September</p>
         <p class="rel" id="navrel">This week</p>
       </div>
-      <button class="arrow" id="next" type="button" aria-label="Next week" disabled>&rsaquo;</button>
+      <button class="arrow" id="next" type="button" aria-label="This week">&rsaquo;</button>
     </nav>
     <p class="goal">Building aerobic endurance &mdash; and lowering heart rate</p>
   </header>
 
+  <!-- last week -->
+  <section class="week" hidden>
+    <div class="pills">
+      <span class="pill muted">Effort <b>by feel</b> &mdash; until the first test</span>
+    </div>
+    <div class="runs">
+      <article class="run done">
+        <span class="num">01</span>
+        <div class="top"><span class="kind">Intervals</span><span class="day">Tue</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Warm up</span><span class="v">6 min easy + 3 &times; 20 sec strides</span></div>
+          <div class="l"><span class="k">Main</span><span class="v"><b>5 &times; (3 min comfortably hard, 2 min jog)</b></span></div>
+          <div class="l"><span class="k">Cool down</span><span class="v">4 min easy</span></div>
+        </div>
+        <p class="donenote">&check; Done</p>
+      </article>
+      <article class="run">
+        <span class="num">02</span>
+        <div class="top"><span class="kind">Easy</span><span class="day">Thu</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Main</span><span class="v single"><b>30 min comfortable</b> <span class="soft">&mdash; can talk in full sentences</span></span></div>
+          <div class="l"><span class="k">Cool down</span><span class="v">4 &times; 20 sec strides + 4 min easy</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <!-- this week -->
   <section class="week">
-  <div class="pills">
-    <span class="pill">Effort <b>by feel</b> &mdash; until the first test</span>
-  </div>
+    <div class="pills">
+      <span class="pill muted">Effort <b>by feel</b> &mdash; until the first test</span>
+    </div>
 
-  <div class="runs">
+    <div class="runs">
 
-    <article class="run">
-      <span class="num">01</span>
-      <div class="top"><span class="kind">Intervals</span><span class="day">Tue</span></div>
-      <div class="lines">
-        <div class="l"><span class="k">Warm up</span><span class="v">6 min easy + 3 &times; 20 sec strides</span></div>
-        <div class="l"><span class="k">Main</span><span class="v"><b>5 &times; 3 min</b>, comfortably hard &mdash; starting to be hard to breathe. <b>Jog</b> the 2 min recovery</span></div>
-        <div class="l"><span class="k">Cool down</span><span class="v">4 min easy</span></div>
-      </div>
-    </article>
+      <article class="run">
+        <span class="num">01</span>
+        <div class="top"><span class="kind">Hills</span><span class="day">Tue</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Warm up</span><span class="v">8 min easy + 3 &times; 20 sec strides</span></div>
+          <div class="l"><span class="k">Main</span><span class="v"><b>5 &times; (3 min uphill, comfortably hard, jog down)</b></span></div>
+          <div class="l"><span class="k">Cool down</span><span class="v">4 min easy</span></div>
+        </div>
+      </article>
 
-    <article class="run">
-      <span class="num">02</span>
-      <div class="top"><span class="kind">Easy</span><span class="day">Thu</span></div>
-      <div class="lines">
-        <div class="l"><span class="k">Main</span><span class="v single">30 min comfortable &mdash; can talk in full sentences</span></div>
-        <div class="l"><span class="k">Cool down</span><span class="v">4 &times; 20 sec strides + 4 min easy</span></div>
-      </div>
-    </article>
+      <article class="run">
+        <span class="num">02</span>
+        <div class="top"><span class="kind">Easy</span><span class="day">Thu</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Main</span><span class="v single"><b>33 min comfortable</b> <span class="soft">&mdash; can talk in full sentences</span></span></div>
+          <div class="l"><span class="k">Cool down</span><span class="v">4 &times; 20 sec strides + 4 min easy</span></div>
+        </div>
+      </article>
 
-  </div>
+    </div>
   </section>
 
 </div>
@@ -188,9 +262,9 @@
 <script>
 (function(){
   var weeks  = [].slice.call(document.querySelectorAll('.week'));
-  var labels = ['This week'];
-  var dates  = ['23 – 29 August'];
-  var CURRENT = 0, i = CURRENT;
+  var labels = ['Last week','This week'];
+  var dates  = ['23 – 29 August','30 August – 5 September'];
+  var CURRENT = 1, i = CURRENT;
   var prev = document.getElementById('prev'),
       next = document.getElementById('next'),
       dEl  = document.getElementById('navdates'),

@@ -25,6 +25,15 @@
     --boxB:#E4EFFA;
     --edge:rgba(14,48,83,.14);
     --badge:#FFFFFF;
+    --good-bg:#D8EFD8;
+    --good-edge:#8FCDA6;
+    --good-ink:#146C3B;
+    --warn-bg:#FFF2CC;
+    --warn-edge:#E4C97A;
+    --warn-ink:#8A6D1D;
+    --miss-bg:#FCDDDD;
+    --miss-edge:#D89A9A;
+    --miss-ink:#9A3B3B;
   }
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
@@ -37,10 +46,19 @@
       --pill-line:#2F5978;
       --pill-muted:#1B2735;
       --pill-muted-line:#33414F;
-        --boxA:#173A57;
+      --boxA:#173A57;
       --boxB:#102B41;
       --edge:rgba(226,237,248,.12);
       --badge:#0A2033;
+      --good-bg:#123424;
+      --good-edge:#2F6B48;
+      --good-ink:#7EE3A8;
+      --warn-bg:#3A2F16;
+      --warn-edge:#6E5A2A;
+      --warn-ink:#E6C97A;
+      --miss-bg:#3A1E1E;
+      --miss-edge:#6E3B3B;
+      --miss-ink:#E9A8A8;
     }
   }
   :root[data-theme="dark"]{
@@ -57,6 +75,15 @@
     --boxB:#102B41;
     --edge:rgba(226,237,248,.12);
     --badge:#0A2033;
+    --good-bg:#123424;
+    --good-edge:#2F6B48;
+    --good-ink:#7EE3A8;
+    --warn-bg:#3A2F16;
+    --warn-edge:#6E5A2A;
+    --warn-ink:#E6C97A;
+    --miss-bg:#3A1E1E;
+    --miss-edge:#6E3B3B;
+    --miss-ink:#E9A8A8;
   }
 
   *{box-sizing:border-box}
@@ -123,6 +150,17 @@
   .l .v{flex:1;font-size:clamp(13px,3.5vw,16px);color:var(--ink)}
   .l .v b{font-weight:600}
   .single{font-size:clamp(16px,4.4vw,19px);font-weight:500}
+  .soft{font-weight:400}
+  .seq{display:flex;flex-direction:column;gap:3px;flex:1}
+  .seq div{font-size:clamp(13px,3.5vw,16px);color:var(--ink)}
+  .seq b{font-weight:600}
+  .seq i{font-style:italic}
+  .run.done{background:var(--good-bg);border-color:var(--good-edge)}
+  .run.partial{background:var(--warn-bg);border-color:var(--warn-edge)}
+  .run.missed{background:var(--miss-bg);border-color:var(--miss-edge)}
+  .donenote{margin:9px 0 0;font-size:clamp(11px,3vw,13px);font-weight:700;letter-spacing:.02em;color:var(--good-ink)}
+  .donenote.partial{color:var(--warn-ink)}
+  .donenote.missed{color:var(--miss-ink)}
 
   /* --- week navigation --- */
   .weeknav{display:flex;align-items:center;gap:10px;margin:10px 0 0}
@@ -143,17 +181,9 @@
   .arrow:disabled{opacity:.25;cursor:default}
   .week{display:flex;flex-direction:column;gap:clamp(10px,2.4vw,15px);flex:1}
   .week[hidden]{display:none}
-  .empty{
-    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:6px;text-align:center;color:var(--ink-faint);padding:40px 10px;
-  }
-  .empty p{margin:0;font-size:clamp(14px,3.6vw,16px)}
-  .empty .sub{font-size:clamp(12px,3.2vw,14px);opacity:.8}
-  .pill.sample{
-    background:transparent;border-style:dashed;color:var(--ink-faint);font-weight:500;
-  }
-  .pill.sample b{color:var(--ink-faint);font-weight:700}
 </style>
+</head>
+<body>
 
 <div class="sheet">
 
@@ -162,7 +192,7 @@
     <nav class="weeknav">
       <button class="arrow" id="prev" type="button" aria-label="Last week">&lsaquo;</button>
       <div class="navlabel">
-        <p class="dates" id="navdates">23 – 29 August</p>
+        <p class="dates" id="navdates">30 August &ndash; 5 September</p>
         <p class="rel" id="navrel">This week</p>
       </div>
       <button class="arrow" id="next" type="button" aria-label="This week">&rsaquo;</button>
@@ -173,67 +203,75 @@
   <!-- last week -->
   <section class="week" hidden>
     <div class="pills">
-      <span class="pill">10K PR <b>69:20</b> &mdash; set at 22&deg;</span>
-      <span class="pill">Easy <b>HR 150</b></span>
+      <span class="pill">&#128081; 10K PR: <b>69:20</b> <i>(6:56/km, set at 22&deg;)</i></span>
+      <span class="pill">&#128081; 5K PR: <b>33:04</b> <i>(6:36/km, set at 19&deg;)</i></span>
+      <span class="pill muted">Intervals <b>6:30/km</b></span>
+      <span class="pill muted">Tempo <b>7:00/km</b></span>
+      <span class="pill muted">Easy <b>HR 160</b></span>
     </div>
     <div class="runs">
-      <article class="run">
+      <article class="run done">
         <span class="num">01</span>
-        <div class="top"><span class="kind">Hills</span><span class="day">Tue</span></div>
+        <div class="top"><span class="kind">Intervals</span><span class="day">Tue</span></div>
         <div class="lines">
-          <div class="l"><span class="k">Warm up</span><span class="v">15 min easy</span></div>
-          <div class="l"><span class="k">Hills</span><span class="v"><b>11 &times; 1.5 min uphill</b>, jog back down</span></div>
-          <div class="l"><span class="k">Cool down</span><span class="v">15 min easy</span></div>
+          <div class="l"><span class="k">Warm up</span><span class="v">10 min easy + 4 &times; 20 sec strides</span></div>
+          <div class="l"><span class="k">Main</span><span class="v"><b>8 &times; (2 min @ 6:30/km, 90 sec jog)</b></span></div>
+          <div class="l"><span class="k">Cool down</span><span class="v">8 min easy</span></div>
         </div>
+        <p class="donenote">&check; Done</p>
       </article>
-      <article class="run">
+      <article class="run done">
         <span class="num">02</span>
-        <div class="top"><span class="kind">Intervals</span><span class="day">Sat</span></div>
+        <div class="top"><span class="kind">Long run</span><span class="day">Sat</span></div>
         <div class="lines">
-          <div class="l"><span class="k">Warm up</span><span class="v">10 min easy</span></div>
-          <div class="l"><span class="k">Main</span><span class="v"><b>8 &times; 3 min</b>, jog the 2 min recovery</span></div>
-          <div class="l"><span class="k">Cool down</span><span class="v">10 min easy</span></div>
+          <div class="l"><span class="k">Main</span><div class="seq">
+            <div><i>45 min continuous:</i></div>
+            <div>8 min easy</div>
+            <div><b>15 min @ 7:00/km</b></div>
+            <div>Remainder easy</div>
+          </div></div>
         </div>
+        <p class="donenote">&check; Done</p>
       </article>
     </div>
   </section>
 
   <!-- this week -->
   <section class="week">
-<div class="pills">
-    <span class="pill">&#128081; 10K PR: <b>69:20</b> <i>(6:56/km, set at 22&deg;)</i></span>
-    <span class="pill">&#128081; 5K PR: <b>33:04</b> <i>(6:36/km, set at 19&deg;)</i></span>
-    <span class="pill muted">Intervals <b>6:30/km</b></span>
-    <span class="pill muted">Tempo <b>7:00/km</b></span>
-    <span class="pill muted">Easy <b>HR 150</b></span>
-  </div>
+    <div class="pills">
+      <span class="pill">&#128081; 10K PR: <b>69:20</b> <i>(6:56/km, set at 22&deg;)</i></span>
+      <span class="pill">&#128081; 5K PR: <b>33:04</b> <i>(6:36/km, set at 19&deg;)</i></span>
+      <span class="pill muted">Intervals <b>7:05/km</b></span>
+      <span class="pill muted">Tempo <b>7:00/km</b></span>
+      <span class="pill muted">Easy <b>HR 160</b></span>
+    </div>
 
-  <div class="runs">
+    <div class="runs">
 
-    <article class="run">
-      <span class="num">01</span>
-      <div class="top"><span class="kind">Intervals</span><span class="day">Tue</span></div>
-      <div class="lines">
-        <div class="l"><span class="k">Warm up</span><span class="v">10 min easy + 4 &times; 20 sec strides</span></div>
-        <div class="l"><span class="k">Main</span><span class="v"><b>8 &times; (2 min @ 6:30/km, 90 sec jog)</b></span></div>
-        <div class="l"><span class="k">Cool down</span><span class="v">8 min easy</span></div>
-      </div>
-    </article>
+      <article class="run">
+        <span class="num">01</span>
+        <div class="top"><span class="kind">Intervals</span><span class="day">Tue</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Warm up</span><span class="v">10 min easy + 4 &times; 20 sec strides</span></div>
+          <div class="l"><span class="k">Main</span><span class="v"><b>6 &times; (3 min @ 7:05/km, 90 sec jog)</b></span></div>
+          <div class="l"><span class="k">Cool down</span><span class="v">8 min easy</span></div>
+        </div>
+      </article>
 
-    <article class="run">
-      <span class="num">02</span>
-      <div class="top"><span class="kind">Long run</span><span class="day">Sat</span></div>
-      <div class="lines">
-        <div class="l"><span class="k">Main</span><div class="seq">
-          <div><i>45 min continuous:</i></div>
-          <div>8 min easy</div>
-          <div><b>15 min @ 7:00/km</b></div>
-          <div>Remainder easy</div>
-        </div></div>
-      </div>
-    </article>
+      <article class="run">
+        <span class="num">02</span>
+        <div class="top"><span class="kind">Long run</span><span class="day">Sat</span></div>
+        <div class="lines">
+          <div class="l"><span class="k">Main</span><div class="seq">
+            <div><i>45 min continuous:</i></div>
+            <div>8 min easy</div>
+            <div><b>15 min @ 7:00/km</b></div>
+            <div>Remainder easy</div>
+          </div></div>
+        </div>
+      </article>
 
-  </div>
+    </div>
   </section>
 
 </div>
@@ -242,7 +280,7 @@
 (function(){
   var weeks  = [].slice.call(document.querySelectorAll('.week'));
   var labels = ['Last week','This week'];
-  var dates  = ['16 – 22 August','23 – 29 August'];
+  var dates  = ['23 – 29 August','30 August – 5 September'];
   var CURRENT = 1, i = CURRENT;
   var prev = document.getElementById('prev'),
       next = document.getElementById('next'),
